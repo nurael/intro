@@ -1,0 +1,171 @@
+---
+layout: default
+title: Nurael
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a1f 50%, #0f0a1a 100%);
+            color: #ffb6c1;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .container {
+            padding: 2rem;
+        }
+        
+        h1 {
+            font-size: 4rem;
+            color: #ff6b9d;
+            text-shadow: 
+                0 0 10px #ff6b9d,
+                0 0 20px #ff6b9d,
+                0 0 40px #ff1493,
+                0 0 80px #ff1493;
+            margin-bottom: 1rem;
+            letter-spacing: 0.2em;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #87ceeb;
+            text-shadow: 0 0 10px #87ceeb;
+            margin-bottom: 2rem;
+        }
+        
+        .tagline {
+            font-size: 0.9rem;
+            color: #dda0dd;
+            opacity: 0.8;
+            margin-bottom: 3rem;
+        }
+        
+        .links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .link {
+            color: #ff6b9d;
+            text-decoration: none;
+            border: 1px solid #ff6b9d;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+        
+        .link:hover {
+            background: #ff6b9d;
+            color: #0a0a0f;
+            box-shadow: 0 0 20px rgba(255, 107, 157, 0.6);
+        }
+        
+        .glitch {
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+        
+        @keyframes glitch {
+            0%, 90%, 100% { transform: translate(0); }
+            92% { transform: translate(-2px, 2px); }
+            94% { transform: translate(2px, -2px); }
+            96% { transform: translate(-2px, -2px); }
+            98% { transform: translate(2px, 2px); }
+        }
+        
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <canvas class="particles" id="particles"></canvas>
+    
+    <div class="container">
+        <h1 class="glitch">✧ NURAEL ✧</h1>
+        <p class="subtitle">cyber-kawaii game engine</p>
+        <p class="tagline">where soft neon meets hard code</p>
+        
+        <div class="links">
+            <a href="https://github.com/nurael" class="link">GitHub</a>
+            <a href="https://jsr.io/@nurael" class="link">JSR</a>
+            <a href="mailto:hello@nurael.dev" class="link">Contact</a>
+        </div>
+    </div>
+    
+    <script>
+        // Simple particle animation
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                size: Math.random() * 2,
+                color: Math.random() > 0.5 ? '#ff6b9d' : '#87ceeb'
+            });
+        }
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 0.6;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
